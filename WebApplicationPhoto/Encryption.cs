@@ -58,6 +58,10 @@ PRIMARY KEY CLUSTERED ([PatientId] ASC) ON [PRIMARY]
  
  */
 
+
+// TODO
+// https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/develop-using-always-encrypted-with-net-framework-data-provider?view=sql-server-ver15
+
 namespace WebApplicationPhoto
 {
     public class Encryption
