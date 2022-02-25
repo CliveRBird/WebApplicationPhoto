@@ -9,6 +9,7 @@ using System.Data;
 
 using System.IO;
 
+
 namespace WebApplicationPhoto
 {
     public class PhotoHelper
