@@ -143,7 +143,7 @@ namespace WebApplicationPhoto
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine(@"{0}, {1}, {2}, {3}", reader[0], reader[1], reader[2], ((DateTime)reader[3]).ToShortDateString());
+                                //Console.WriteLine(@"{0}, {1}, {2}, {3}", reader[0], reader[1], reader[2], ((DateTime)reader[3]).ToShortDateString());
                             }
                         }
 
