@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
+
+using System.IO;
+
 // See
 // https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/develop-using-always-encrypted-with-net-framework-data-provider?view=sql-server-ver15
 
@@ -38,6 +44,17 @@ CREATE TABLE Customers (
     Age int NULL  
 );  
 GO  
+
+CREATE TABLE [dbo].[Patients]
+(
+[PatientId]     [int] IDENTITY(1,1), 
+[SSN]           [char](11) COLLATE Latin1_General_BIN2 ENCRYPTED WITH (ENCRYPTION_TYPE = DETERMINISTIC, ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256', COLUMN_ENCRYPTION_KEY = MyCEK) NOT NULL,
+[FirstName]     [nvarchar](50) NULL,
+[LastName]      [nvarchar](50) NULL, 
+[BirthDate]     [date] ENCRYPTED WITH (ENCRYPTION_TYPE = RANDOMIZED, ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256', COLUMN_ENCRYPTION_KEY = MyCEK) NOT NULL
+PRIMARY KEY CLUSTERED ([PatientId] ASC) ON [PRIMARY]
+);
+ GO
  
  */
 
@@ -45,5 +62,96 @@ namespace WebApplicationPhoto
 {
     public class Encryption
     {
+
+        private static string connstr_encrypted;
+
+        static Encryption()
+        {
+            connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr"].ConnectionString;
+        }
+        private static int insert() 
+        {
+            int i=0;
+
+            using (SqlConnection connectionString = new SqlConnection(connstr_encrypted))
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = connectionString;
+                    cmd.CommandText = @"INSERT INTO [dbo].[Patients] ([SSN], [FirstName], [LastName], [BirthDate]) VALUES (@SSN, @FirstName, @LastName, @BirthDate);";
+
+                    SqlParameter paramSSN = cmd.CreateParameter();
+                    paramSSN.ParameterName = @"@SSN";
+                    paramSSN.DbType = DbType.AnsiStringFixedLength;
+                    paramSSN.Direction = ParameterDirection.Input;
+                    paramSSN.Value = "795-73-9838";
+                    paramSSN.Size = 11;
+                    cmd.Parameters.Add(paramSSN);
+
+                    SqlParameter paramFirstName = cmd.CreateParameter();
+                    paramFirstName.ParameterName = @"@FirstName";
+                    paramFirstName.DbType = DbType.String;
+                    paramFirstName.Direction = ParameterDirection.Input;
+                    paramFirstName.Value = "Catherine";
+                    paramFirstName.Size = 50;
+                    cmd.Parameters.Add(paramFirstName);
+
+                    SqlParameter paramLastName = cmd.CreateParameter();
+                    paramLastName.ParameterName = @"@LastName";
+                    paramLastName.DbType = DbType.String;
+                    paramLastName.Direction = ParameterDirection.Input;
+                    paramLastName.Value = "Abel";
+                    paramLastName.Size = 50;
+                    cmd.Parameters.Add(paramLastName);
+
+                    SqlParameter paramBirthdate = cmd.CreateParameter();
+                    paramBirthdate.ParameterName = @"@BirthDate";
+                    paramBirthdate.SqlDbType = SqlDbType.Date;
+                    paramBirthdate.Direction = ParameterDirection.Input;
+                    paramBirthdate.Value = new DateTime(1996, 09, 10);
+                    cmd.Parameters.Add(paramBirthdate);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            return i;
+        }
+
+
+        private int fetch()
+        {
+            int i = 0;
+
+            using (SqlConnection connectionString = new SqlConnection(connstr_encrypted))
+            {
+                using (SqlCommand cmd = connectionString.CreateCommand())
+                {
+
+                    cmd.Connection = connectionString;
+                    cmd.CommandText = @"SELECT [SSN], [FirstName], [LastName], [BirthDate] FROM [dbo].[Patients] WHERE SSN=@SSN";
+                    SqlParameter paramSSN = cmd.CreateParameter();
+                    paramSSN.ParameterName = @"@SSN";
+                    paramSSN.DbType = DbType.AnsiStringFixedLength;
+                    paramSSN.Direction = ParameterDirection.Input;
+                    paramSSN.Value = "795-73-9838";
+                    paramSSN.Size = 11;
+                    cmd.Parameters.Add(paramSSN);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine(@"{0}, {1}, {2}, {3}", reader[0], reader[1], reader[2], ((DateTime)reader[3]).ToShortDateString());
+                            }
+                        }
+
+                    }
+                }
+            }
+            return i;
+        }
+
     }
 }
