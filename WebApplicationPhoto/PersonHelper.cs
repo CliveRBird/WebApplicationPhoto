@@ -85,7 +85,19 @@ namespace WebApplicationPhoto
 
         public static int Delete(int p)
         {
-            int i = 0;
+
+            SqlConnection cnn = new SqlConnection(strConn);
+            SqlCommand cmd = new SqlCommand();
+
+            cmd.Connection = cnn;
+            cmd.CommandText = "delete from person where personid = @personid";
+
+            SqlParameter personid = new SqlParameter("@personid", p);
+            cmd.Parameters.Add(personid);
+
+            cnn.Open();
+            int i = cmd.ExecuteNonQuery();
+            cnn.Close();
 
             return i;
 
