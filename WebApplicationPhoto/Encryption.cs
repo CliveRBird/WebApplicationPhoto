@@ -19,6 +19,7 @@ go
 
 // Tip: Run as Admin the SQL Server Management studio. This then creates the certificate on the local computer.
 // MMC with the certificate snap in. Personal>Certificates folder has the certificate present.
+// If not run as Admin, the certificate gets lost i.e. the certificate doesn't appear in MMC>Certificates>Personal>Certificates
 
 CREATE COLUMN MASTER KEY MyCMK  
 WITH (  
