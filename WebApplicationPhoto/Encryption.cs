@@ -176,9 +176,4 @@ namespace WebApplicationPhoto
 
     }
 
-    public class PersonEncryption
-    {
-
-    }
-
 }
