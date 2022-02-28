@@ -126,6 +126,25 @@ namespace WebApplicationPhoto
 
         }
 
+        protected void btnFetch_Click(object sender, EventArgs e)
+        {
+            PatientEncryption encryptedPatient = new PatientEncryption();
+
+            try
+            {
+                //string FirstName = "";
+                encryptedPatient.fetch();
+                tbFirstName.Text = encryptedPatient.FirstName;
+                tbLastName.Text = encryptedPatient.LastName;
+                lblBirthDate.Text = encryptedPatient.BirthDate;
+                
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Text = ex.Message.ToString();
+            }
+
+        }
 
     }
 }

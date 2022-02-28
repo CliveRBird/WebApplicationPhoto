@@ -126,10 +126,17 @@
                         </asp:DropDownList>
                     </td>
                 </tr>
+                <tr>
+                    <td>Birth Date</td>
+                    <td>
+                        <asp:Label ID="lblBirthDate" runat="server"></asp:Label>
+                    </td>
+                </tr>
                
             </table>
 
             <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" />
+            <asp:Button ID="btnFetch" runat="server" Text="Fetch" OnClick="btnFetch_Click" />
             <p></p>
             <asp:Label ID="lblStatus" runat="server" Text=""></asp:Label>
         </div>

@@ -62,6 +62,9 @@ namespace WebApplicationPhoto
     {
 
         private static string connstr_encrypted;
+        public string FirstName;
+        public string LastName;
+        public string BirthDate;
 
         static PatientEncryption()
         {
@@ -125,13 +128,15 @@ namespace WebApplicationPhoto
         {
             int i = 0;
 
-            using (SqlConnection connectionString = new SqlConnection(connstr_encrypted))
+            using (SqlConnection connection = new SqlConnection(connstr_encrypted))
             {
-                using (SqlCommand cmd = connectionString.CreateCommand())
+                using (SqlCommand cmd = connection.CreateCommand())
                 {
 
-                    cmd.Connection = connectionString;
-                    cmd.CommandText = @"SELECT [SSN], [FirstName], [LastName], [BirthDate] FROM [dbo].[Patients] WHERE SSN=@SSN";
+                    cmd.Connection = connection;
+                    cmd.CommandText = @"SELECT top 1 [SSN], [FirstName], [LastName], [BirthDate] FROM [dbo].[Patients] WHERE SSN=@SSN";
+                    connection.Open();
+
                     SqlParameter paramSSN = cmd.CreateParameter();
                     paramSSN.ParameterName = @"@SSN";
                     paramSSN.DbType = DbType.AnsiStringFixedLength;
@@ -145,11 +150,15 @@ namespace WebApplicationPhoto
                         {
                             while (reader.Read())
                             {
+                                FirstName = reader[1].ToString();
+                                LastName = reader[2].ToString();
+                                BirthDate = reader[3].ToString();
                                 //Console.WriteLine(@"{0}, {1}, {2}, {3}", reader[0], reader[1], reader[2], ((DateTime)reader[3]).ToShortDateString());
                             }
                         }
 
                     }
+                    connection.Close();
                 }
             }
             return i;
