@@ -68,10 +68,9 @@ namespace WebApplicationPhoto
             //connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr"].ConnectionString;
             connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr_encrypted"].ConnectionString;
         }
-        public int insert(string FirstName, string LastName) 
+        public int insert(string FirstName, string LastName, string BirthYear, string BirthMonth, string BirthDay) 
         {
             int i=0;
-
 
             using (SqlConnection connection = new SqlConnection(connstr_encrypted))
                 {
@@ -108,7 +107,8 @@ namespace WebApplicationPhoto
                         paramBirthdate.ParameterName = @"@BirthDate";
                         paramBirthdate.SqlDbType = SqlDbType.Date;
                         paramBirthdate.Direction = ParameterDirection.Input;
-                        paramBirthdate.Value = new DateTime(1996, 09, 10);
+
+                        paramBirthdate.Value = new DateTime(Int32.Parse(BirthYear), Int32.Parse(BirthMonth), Int32.Parse(BirthDay));
                         cmd.Parameters.Add(paramBirthdate);
 
                         cmd.ExecuteNonQuery();

@@ -114,7 +114,10 @@ namespace WebApplicationPhoto
                 
                 string FirstName = tbFirstName.Text;
                 string LastName = tbLastName.Text;
-                encryptedPatient.insert(FirstName, LastName);
+                string BirthYear = ddlBirthYear.SelectedValue;
+                string BirthMonth = ddlBirthMonth.SelectedValue;
+                string BirthDay = ddlBirthDay.SelectedValue;
+                encryptedPatient.insert(FirstName, LastName, BirthYear, BirthMonth, BirthDay);
             }
             catch (Exception ex)
             {
