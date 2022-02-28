@@ -24,6 +24,24 @@ namespace WebApplicationPhoto
         protected global::System.Web.UI.WebControls.DetailsView DetailsView1;
 
         /// <summary>
+        /// tbFirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbFirstName;
+
+        /// <summary>
+        /// tbLastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbLastName;
+
+        /// <summary>
         /// btnAdd control.
         /// </summary>
         /// <remarks>

@@ -111,8 +111,10 @@ namespace WebApplicationPhoto
             try
             {
                 Encryption encryptedPatient = new Encryption();
-
-                encryptedPatient.insert();
+                
+                string FirstName = tbFirstName.Text;
+                string LastName = tbLastName.Text;
+                encryptedPatient.insert(FirstName, LastName);
             }
             catch (Exception ex)
             {

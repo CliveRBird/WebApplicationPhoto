@@ -46,9 +46,23 @@
 
     <div class="row">
         <div class="col-md-12">
-            <P>Encrypted Button</P>
+            <P>Encrypted Patient Fields</P>
+
+            <table>
+                <tr>
+                    <td>First Name</td>
+                    <td><asp:TextBox ID="tbFirstName" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr>
+                    <td>Last Name</td>
+                    <td><asp:TextBox ID="tbLastName" runat="server"></asp:TextBox></td>
+                </tr>
+               
+            </table>
+
             <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" />
-            <asp:Label ID="lblStatus" runat="server" Text="Label"></asp:Label>
+            <p></p>
+            <asp:Label ID="lblStatus" runat="server" Text=""></asp:Label>
         </div>
     </div>
 
