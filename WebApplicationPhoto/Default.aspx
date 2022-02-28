@@ -44,4 +44,12 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <P>Encrypted Button</P>
+            <asp:Button ID="btnAdd" runat="server" Text="Add" OnClick="btnAdd_Click" />
+            <asp:Label ID="lblStatus" runat="server" Text="Label"></asp:Label>
+        </div>
+    </div>
+
 </asp:Content>

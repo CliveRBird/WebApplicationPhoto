@@ -105,5 +105,14 @@ namespace WebApplicationPhoto
             BindData();
         }
 
+        protected void btnAdd_Click(object sender, EventArgs e)
+        {
+            Encryption encryptedPatient = new Encryption();
+
+            encryptedPatient.insert();
+
+        }
+
+
     }
 }

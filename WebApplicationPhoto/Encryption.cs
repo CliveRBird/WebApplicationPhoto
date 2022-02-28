@@ -73,57 +73,64 @@ namespace WebApplicationPhoto
         {
             connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr"].ConnectionString;
         }
-        private static int insert() 
+        public int insert() 
         {
             int i=0;
 
-            using (SqlConnection connectionString = new SqlConnection(connstr_encrypted))
+            try
             {
-                using (SqlCommand cmd = new SqlCommand())
+                using (SqlConnection connection = new SqlConnection(connstr_encrypted))
                 {
-                    cmd.Connection = connectionString;
-                    cmd.CommandText = @"INSERT INTO [dbo].[Patients] ([SSN], [FirstName], [LastName], [BirthDate]) VALUES (@SSN, @FirstName, @LastName, @BirthDate);";
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = connection;
+                        cmd.CommandText = @"INSERT INTO [dbo].[Patients] ([SSN], [FirstName], [LastName], [BirthDate]) VALUES (@SSN, @FirstName, @LastName, @BirthDate);";
+                        connection.Open();
+                        SqlParameter paramSSN = cmd.CreateParameter();
+                        paramSSN.ParameterName = @"@SSN";
+                        paramSSN.DbType = DbType.AnsiStringFixedLength;
+                        paramSSN.Direction = ParameterDirection.Input;
+                        paramSSN.Value = "795-73-9838";
+                        paramSSN.Size = 11;
+                        cmd.Parameters.Add(paramSSN);
 
-                    SqlParameter paramSSN = cmd.CreateParameter();
-                    paramSSN.ParameterName = @"@SSN";
-                    paramSSN.DbType = DbType.AnsiStringFixedLength;
-                    paramSSN.Direction = ParameterDirection.Input;
-                    paramSSN.Value = "795-73-9838";
-                    paramSSN.Size = 11;
-                    cmd.Parameters.Add(paramSSN);
+                        SqlParameter paramFirstName = cmd.CreateParameter();
+                        paramFirstName.ParameterName = @"@FirstName";
+                        paramFirstName.DbType = DbType.String;
+                        paramFirstName.Direction = ParameterDirection.Input;
+                        paramFirstName.Value = "Catherine";
+                        paramFirstName.Size = 50;
+                        cmd.Parameters.Add(paramFirstName);
 
-                    SqlParameter paramFirstName = cmd.CreateParameter();
-                    paramFirstName.ParameterName = @"@FirstName";
-                    paramFirstName.DbType = DbType.String;
-                    paramFirstName.Direction = ParameterDirection.Input;
-                    paramFirstName.Value = "Catherine";
-                    paramFirstName.Size = 50;
-                    cmd.Parameters.Add(paramFirstName);
+                        SqlParameter paramLastName = cmd.CreateParameter();
+                        paramLastName.ParameterName = @"@LastName";
+                        paramLastName.DbType = DbType.String;
+                        paramLastName.Direction = ParameterDirection.Input;
+                        paramLastName.Value = "Abel";
+                        paramLastName.Size = 50;
+                        cmd.Parameters.Add(paramLastName);
 
-                    SqlParameter paramLastName = cmd.CreateParameter();
-                    paramLastName.ParameterName = @"@LastName";
-                    paramLastName.DbType = DbType.String;
-                    paramLastName.Direction = ParameterDirection.Input;
-                    paramLastName.Value = "Abel";
-                    paramLastName.Size = 50;
-                    cmd.Parameters.Add(paramLastName);
+                        SqlParameter paramBirthdate = cmd.CreateParameter();
+                        paramBirthdate.ParameterName = @"@BirthDate";
+                        paramBirthdate.SqlDbType = SqlDbType.Date;
+                        paramBirthdate.Direction = ParameterDirection.Input;
+                        paramBirthdate.Value = new DateTime(1996, 09, 10);
+                        cmd.Parameters.Add(paramBirthdate);
 
-                    SqlParameter paramBirthdate = cmd.CreateParameter();
-                    paramBirthdate.ParameterName = @"@BirthDate";
-                    paramBirthdate.SqlDbType = SqlDbType.Date;
-                    paramBirthdate.Direction = ParameterDirection.Input;
-                    paramBirthdate.Value = new DateTime(1996, 09, 10);
-                    cmd.Parameters.Add(paramBirthdate);
-
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            } 
+            catch (Exception e)
+            {
+                
             }
 
             return i;
         }
 
 
-        private int fetch()
+        public int fetch()
         {
             int i = 0;
 
