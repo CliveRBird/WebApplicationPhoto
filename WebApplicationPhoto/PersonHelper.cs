@@ -105,14 +105,72 @@ namespace WebApplicationPhoto
 
         public static List<Person> GetAll()
         {
+            SqlConnection cnn = new SqlConnection(strConn);
+            SqlCommand cmd = new SqlCommand();
             List<Person> persons = new List<Person>();
+
+            byte[] data = new byte[1000];
+
+            cmd.CommandText = "select * from person order by personid";
+            cmd.Connection = cnn;
+
+            cnn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                Person p = new Person();
+                p.PersonID = reader.GetInt32(reader.GetOrdinal("PersonID"));
+                p.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
+                p.LastName = reader.GetString(reader.GetOrdinal("LastName"));
+                p.NationalInsuranceNumber = reader.GetString(reader.GetOrdinal("NationalInsuranceNumber"));
+                p.Photo = (byte[])reader.GetValue(reader.GetOrdinal("Photo"));
+                persons.Add(p);
+            }
+            cnn.Close();
 
             return persons;
         }
 
         public static Person GetByID(int personid)
         {
+            SqlConnection cnn = new SqlConnection(strConn);
+            SqlCommand cmd = new SqlCommand();
+            byte[] data = new byte[1000];
+
+            cmd.CommandText = "select * from person where PersonID = @personid";
+            cmd.Connection = cnn;
+
+            SqlParameter pId = new SqlParameter("@personid", personid);
+            cmd.Parameters.Add(pId);
+
+            cnn.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
             Person p = new Person();
+            while (reader.Read())
+            {
+                p.PersonID = reader.GetInt32(reader.GetOrdinal("PersonID"));
+                p.FirstName = reader.GetString(reader.GetOrdinal("FirstName"));
+                p.LastName = reader.GetString(reader.GetOrdinal("LastName"));
+                p.NationalInsuranceNumber = reader.GetString(reader.GetOrdinal("NationalInsuranceNumber"));
+                MemoryStream ms = new MemoryStream();
+                int index = 0;
+                while (true)
+                {
+                    long count = reader.GetBytes(reader.GetOrdinal("Photo"), index, data, 0, data.Length);
+                    if (count == 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        index = index + (int)count;
+                        ms.Write(data, 0, (int)count);
+                    }
+                }
+                p.Photo = ms.ToArray();
+                p.Photo = (byte[])reader.GetValue(reader.GetOrdinal("Photo"));
+            }
+            cnn.Close();
 
             return p;
         }
