@@ -189,6 +189,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="PersonHelper.cs" />
     <Compile Include="Photo.cs" />
     <Compile Include="PhotoHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

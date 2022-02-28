@@ -29,3 +29,29 @@ SELECT
 BulkColumn FROM OPENROWSET(BULK N'c:\PNG\2cd43b_620b3bdc917e4d4793b4e3cb5b58e89e_mv2.png', SINGLE_BLOB) image;
 
 select * from Photos
+
+USE [Photo]
+GO
+
+/****** Object:  Table [dbo].[Person]    Script Date: 2/28/2022 5:07:15 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Person](
+	[PersonID] [int] IDENTITY(1,1) NOT NULL,
+	[NationalInsuranceNumber] [varchar](50) COLLATE Latin1_General_BIN2 ENCRYPTED WITH (COLUMN_ENCRYPTION_KEY = [CEK_Auto1], ENCRYPTION_TYPE = Deterministic, ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256') NOT NULL,
+	[FirstName] [nvarchar](50) NULL,
+	[LastName] [nvarchar](50) NULL,
+	[Photo] [varbinary](max) ENCRYPTED WITH (COLUMN_ENCRYPTION_KEY = [CEK_Auto1], ENCRYPTION_TYPE = Randomized, ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256') NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PersonID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+
