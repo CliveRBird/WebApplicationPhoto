@@ -65,7 +65,7 @@ namespace WebApplicationPhoto
             photo.Value = p.Photo;
             SqlParameter offset = new SqlParameter("@offset", SqlDbType.BigInt);
             offset.Value = 0;
-            SqlParameter length = new SqlParameter("@length", p.PhotoData.Length);
+            SqlParameter length = new SqlParameter("@length", p.Photo.Length);
             SqlParameter personid = new SqlParameter("@personid", p.PersonID);
 
             cmd.Parameters.Add(NationalInsuranceNumber);
