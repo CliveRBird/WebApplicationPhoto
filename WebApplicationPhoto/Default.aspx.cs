@@ -110,7 +110,7 @@ namespace WebApplicationPhoto
 
             try
             {
-                Encryption encryptedPatient = new Encryption();
+                PatientEncryption encryptedPatient = new PatientEncryption();
                 
                 string FirstName = tbFirstName.Text;
                 string LastName = tbLastName.Text;

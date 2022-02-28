@@ -58,12 +58,12 @@ GO
 
 namespace WebApplicationPhoto
 {
-    public class Encryption
+    public class PatientEncryption
     {
 
         private static string connstr_encrypted;
 
-        static Encryption()
+        static PatientEncryption()
         {
             //connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr"].ConnectionString;
             connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr_encrypted"].ConnectionString;
@@ -116,7 +116,6 @@ namespace WebApplicationPhoto
                         connection.Close();
                     }
                 }
-
 
             return i;
         }
