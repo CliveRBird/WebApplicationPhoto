@@ -49,6 +49,17 @@ CREATE TABLE [dbo].[Patients]
 PRIMARY KEY CLUSTERED ([PatientId] ASC) ON [PRIMARY]
 );
 GO
+
+CREATE TABLE [dbo].[Person]
+(
+[PersonID]                  [int] IDENTITY(1,1), 
+[NationalInsuranceNumber]   [varchar](50) COLLATE Latin1_General_BIN2 ENCRYPTED WITH (ENCRYPTION_TYPE = DETERMINISTIC, ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256', COLUMN_ENCRYPTION_KEY = CEK_Auto1) NOT NULL,
+[FirstName]                 [nvarchar](50) NULL,
+[LastName]                  [nvarchar](50) NULL, 
+[Photo]                     [varbinary](max) ENCRYPTED WITH (ENCRYPTION_TYPE = RANDOMIZED, ALGORITHM = 'AEAD_AES_256_CBC_HMAC_SHA_256', COLUMN_ENCRYPTION_KEY = CEK_Auto1) NULL
+PRIMARY KEY CLUSTERED ([PersonID] ASC) ON [PRIMARY]
+);
+GO
  
  */
 
@@ -164,4 +175,10 @@ namespace WebApplicationPhoto
         }
 
     }
+
+    public class PersonEncryption
+    {
+
+    }
+
 }
