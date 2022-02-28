@@ -4,7 +4,7 @@
 
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
             <h2>PNG To SQL Server Varbinary(Max) Encrypted Column</h2>
             <p>
                 <asp:DetailsView ID="DetailsView1" runat="server" Height="50px" Width="125px" AllowPaging="True" OnPageIndexChanging="DetailsView1_PageIndexChanging" OnModeChanging="DetailsView1_ModeChanging" OnItemDeleting="DetailsView1_ItemDeleting" OnItemUpdating="DetailsView1_ItemUpdating" OnItemInserting="DetailsView1_ItemInserting">
@@ -42,11 +42,8 @@
                 </asp:DetailsView>
             </p>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <P>Encrypted Patient Fields</P>
+        <div class="col-md-4">
+            <h2>Encrypted Patient Fields</h2>
 
             <table>
                 <tr>
@@ -140,6 +137,7 @@
             <p></p>
             <asp:Label ID="lblStatus" runat="server" Text=""></asp:Label>
         </div>
+        <div class="col-md-4"></div>
     </div>
 
 </asp:Content>

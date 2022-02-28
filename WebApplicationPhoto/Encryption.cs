@@ -152,8 +152,7 @@ namespace WebApplicationPhoto
                             {
                                 FirstName = reader[1].ToString();
                                 LastName = reader[2].ToString();
-                                BirthDate = reader[3].ToString();
-                                //Console.WriteLine(@"{0}, {1}, {2}, {3}", reader[0], reader[1], reader[2], ((DateTime)reader[3]).ToShortDateString());
+                                BirthDate = ((DateTime)reader[3]).ToShortDateString();
                             }
                         }
 

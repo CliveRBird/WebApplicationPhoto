@@ -132,7 +132,6 @@ namespace WebApplicationPhoto
 
             try
             {
-                //string FirstName = "";
                 encryptedPatient.fetch();
                 tbFirstName.Text = encryptedPatient.FirstName;
                 tbLastName.Text = encryptedPatient.LastName;
