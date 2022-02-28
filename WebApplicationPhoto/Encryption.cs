@@ -12,11 +12,13 @@ using System.IO;
 // See
 // https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/develop-using-always-encrypted-with-net-framework-data-provider?view=sql-server-ver15
 
-//
 /*
 
 Use Photo
 go
+
+// Tip: Run as Admin the SQL Server Management studio. This then creates the certificate on the local computer.
+// MMC with the certificate snap in. Personal>Certificates folder has the certificate present.
 
 CREATE COLUMN MASTER KEY MyCMK  
 WITH (  
@@ -71,15 +73,15 @@ namespace WebApplicationPhoto
 
         static Encryption()
         {
-            connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr"].ConnectionString;
+            //connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr"].ConnectionString;
+            connstr_encrypted = ConfigurationManager.ConnectionStrings["connstr_encrypted"].ConnectionString;
         }
         public int insert() 
         {
             int i=0;
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connstr_encrypted))
+
+            using (SqlConnection connection = new SqlConnection(connstr_encrypted))
                 {
                     using (SqlCommand cmd = new SqlCommand())
                     {
@@ -120,11 +122,7 @@ namespace WebApplicationPhoto
                         cmd.ExecuteNonQuery();
                     }
                 }
-            } 
-            catch (Exception e)
-            {
-                
-            }
+
 
             return i;
         }

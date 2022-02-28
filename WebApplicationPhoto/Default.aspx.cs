@@ -107,9 +107,17 @@ namespace WebApplicationPhoto
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            Encryption encryptedPatient = new Encryption();
 
-            encryptedPatient.insert();
+            try
+            {
+                Encryption encryptedPatient = new Encryption();
+
+                encryptedPatient.insert();
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Text = ex.Message.ToString();
+            }
 
         }
 
