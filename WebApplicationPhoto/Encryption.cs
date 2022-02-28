@@ -111,7 +111,9 @@ namespace WebApplicationPhoto
                         paramBirthdate.Value = new DateTime(Int32.Parse(BirthYear), Int32.Parse(BirthMonth), Int32.Parse(BirthDay));
                         cmd.Parameters.Add(paramBirthdate);
 
-                        cmd.ExecuteNonQuery();
+                        i = cmd.ExecuteNonQuery();
+
+                        connection.Close();
                     }
                 }
 
